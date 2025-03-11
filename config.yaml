@@ -1,0 +1,297 @@
+# ShiftKit Configuration File
+
+# Global settings
+settings:
+  log_level: INFO
+  backup_configs: true
+  backup_dir: ~/.shiftkit_backups
+  sudo_timeout: 30  # Minutes to keep sudo alive
+
+# Modules to execute (in order)
+modules:
+  - name: apt
+    enabled: true
+    description: Install packages from apt repositories
+
+  - name: software
+    enabled: true
+    description: Install third-party software
+
+  - name: configs
+    enabled: true
+    description: Restore configuration files
+
+  - name: system
+    enabled: true
+    description: Configure system settings
+
+  - name: drivers
+    enabled: true
+    description: Install and configure drivers
+
+  - name: custom
+    enabled: true
+    description: User-specific customizations and installations
+
+  - name: backup
+    enabled: true
+    description: Backup and restore important user data
+
+  - name: devenv
+    enabled: true
+    description: Set up development environments and tools
+
+  - name: desktop
+    enabled: true
+    description: Customize desktop environment settings
+
+  - name: network
+    enabled: true
+    description: Configure network settings and VPN connections
+
+  - name: security
+    enabled: true
+    description: Configure security settings and install security tools
+
+# Module-specific configurations
+apt:
+  packages:
+    - build-essential
+    - git
+    - curl
+    - wget
+    - vim
+    - htop
+    - tmux
+    - zsh
+    - ripgrep
+    - fd-find
+    - fzf
+    - jq
+    - neofetch
+    - tldr
+    - unzip
+    - zip
+    - gnome-tweaks
+    - dconf-editor
+
+software:
+  steam:
+    enabled: true
+    method: custom
+    url: "https://repo.steampowered.com/steam/archive/precise/steam_latest.deb"
+
+  windsurf:
+    enabled: true
+    method: custom
+    repo_url: "https://windsurf-stable.codeiumdata.com/wVxQEIWkwPUEAGf3"
+
+  neovim:
+    enabled: true
+    method: build
+    repo: "https://github.com/neovim/neovim.git"
+
+  node:
+    enabled: true
+    method: nvm
+    version: lts
+    installer_url: "https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh"
+
+  python:
+    enabled: true
+    method: build
+    version: "latest"
+
+  ghostty:
+    enabled: true
+    method: custom
+    repo: "https://github.com/ghostty-org/ghostty"
+
+  telegram:
+    enabled: true
+    method: flatpak
+
+  solaar:
+    enabled: true
+    method: custom
+    repo: "https://github.com/pwr-solar/solaar"
+
+  #! Add these
+  # gh,
+
+configs:
+  bashrc:
+    enabled: true
+    source: "configs/bashrc"
+    target: "~/.bashrc"
+
+  tiling_manager:
+    enabled: false
+    name: "sway"
+    source: "configs/sway"
+
+  neovim:
+    repo: "https://github.com/SuhailAhmedVelorum/nvim-config.git"
+
+  rice:
+    enabled: true
+    theme: "configs/theme"
+    icons: "configs/icons"
+    fonts: "configs/fonts"
+
+system:
+  timeout:
+    enabled: true
+    value: 300  # seconds
+
+  battery_percentage:
+    enabled: true
+    show: true
+
+  hot_corner:
+    enabled: true
+    action: "show_applications"
+
+  performance_mode:
+    enabled: true
+    mode: "performance"  # balanced, performance, power-save
+
+drivers:
+  fingerprint:
+    enabled: false # Figure this shit out
+    model: "goodix"
+    device: "dell"
+
+# Custom module configurations
+custom:
+  packages:
+    - ffmpeg
+    - vlc
+    - cloudflared
+
+  repositories:
+    #- url: "https://github.com/example/dotfiles.git"
+    #  directory: "dotfiles"
+    #  branch: "main"
+
+  commands:
+    - command: "echo 'Custom command executed' > ~/custom_command_executed.txt"
+      description: "Create a marker file to indicate custom commands ran"
+    - command: "gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'"
+      description: "Set dark mode as default"
+
+# Backup module configurations
+# !BROKEN
+backup:
+  enabled: false
+
+  base_dir: "~/.shiftkit_backups"
+
+  documents:
+    enabled: true
+    source_dir: "~/Documents"
+
+  projects:
+    enabled: true
+    source_dir: "~/Projects"
+
+  browser_data:
+    enabled: true
+    browser: "firefox"
+
+  restore:
+    enabled: false
+    type: "documents"
+    file: "~/.shiftkit_backups/documents/documents_backup.tar.gz"
+    target_dir: "~/Restored"
+
+# Development environment configurations
+devenv:
+  python:
+    enabled: true
+
+  docker:
+    enabled: true
+
+  vscode:
+    enabled: true
+    extensions:
+      - "ms-python.python"
+      - "ms-vscode.cpptools"
+      - "ms-azuretools.vscode-docker"
+      - "dbaeumer.vscode-eslint"
+      - "esbenp.prettier-vscode"
+      - "ms-vscode.cmake-tools"
+
+  git:
+    enabled: true
+    name: "Suhail Ahmed"
+    email: "suhailahmedvelorum@gmail.com"
+    editor: "windsurf --wait"
+
+# Desktop environment configurations
+desktop:
+  theme:
+    enabled: true
+    name: "Adwaita-dark"
+
+  icons:
+    enabled: true
+    name: "Papirus-Dark"
+
+  cursor:
+    enabled: true
+    name: "Adwaita"
+    size: 24
+
+  dock:
+    enabled: true
+    position: "BOTTOM"
+    autohide: true
+    icon_size: 48
+
+  background:
+    enabled: true
+    path: "~/Pictures/Wallpapers/default.jpg"
+
+# Network configuration
+network:
+  vpn:
+    enabled: true
+    type: "nordvpn"
+
+  firewall:
+    enabled: true
+    allow_ports:
+      - 22    # SSH
+      - 80    # HTTP
+      - 443   # HTTPS
+
+  dns:
+    enabled: true
+    servers:
+      - "1.1.1.1"
+      - "8.8.8.8"
+
+# Security configuration
+security:
+  auto_updates:
+    enabled: true
+
+  fail2ban:
+    enabled: true
+
+  ssh:
+    enabled: true
+    port: 22
+    permit_root_login: false
+    password_authentication: true
+
+  firewall:
+    enabled: true
+    allow_ports:
+      - 80    # HTTP
+      - 443   # HTTPS
+
+  audit:
+    enabled: true
